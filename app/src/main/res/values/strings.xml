@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Easy Goniometer</string>
+
+    <!--Instructions for the Goniometer Steps-->
+    <string name="goniometer_intro">Lie flat on your back. If possible, put a towel under the ankle
+        of your affected leg.  You may need another person to help you with this activity.</string>
+    <string name="goniometer_first">Place the phone flat on your thigh.  When ready, tap the screen
+        to take the first of four measurements.  </string>
+    <string name="goniometer_second">Place the phone flat on your shin.  When ready, tap the screen
+        to take the second of four measurements.  </string>
+    <string name="goniometer_third">Slowly slide your foot back to bend your knee as far as you can
+        without pain.  When your knee is fully bent, tap the screen to take the third measurement.
+        If it hurts, stop immediately and return your knee back to the table. </string>
+    <string name="goniometer_fourth">Keeping your knee bent, place the phone flat against your shin.
+        When ready tap the screen to take the final measurement.  </string>
+    <string name="goniometer_tap">Tap the screen when ready</string>
+    <string name="goniometer_contentDescription">Step Illustration</string>
+
+    <!--Dashboard Strings-->
+    <string name="extension_label">Extension</string>
+    <string name="flexion_label">Flexion</string>
+
+    <!--Detail View Strings-->
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="share_btn_txt">Share</string>
+</resources>
