@@ -1,43 +1,57 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.quantrian.easygoniometer.ui.DetailsFragment"
-    android:orientation="vertical"
-    android:padding="4dp"
     >
 
-    <!-- TODO: Update blank fragment layout -->
 
     <TextView
         android:id="@+id/detail_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:textAlignment="center"
         android:textSize="24sp"
-        android:layout_marginBottom="4dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/detail_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:textAlignment="center"
-        android:layout_marginBottom="4dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_heading" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:id="@+id/flex_row"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:layout_marginBottom="4dp">
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_heading">
 
         <ImageView
             android:id="@+id/flex_thumb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:contentDescription="@string/flex_icon_description"
             android:src="@mipmap/ic_launcher" />
 
         <LinearLayout
@@ -50,33 +64,41 @@
                 android:id="@+id/flex_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/flex_compare"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/flex_msg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:visibility="invisible" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:id="@+id/ext_row"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:layout_marginBottom="4dp">
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flex_row">
 
         <ImageView
             android:id="@+id/ext_thumb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:contentDescription="@string/ext_icon_description"
             android:src="@mipmap/ic_launcher_round" />
 
         <LinearLayout
@@ -89,19 +111,19 @@
                 android:id="@+id/ext_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/ext_compare"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/ext_msg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:visibility="invisible" />
         </LinearLayout>
     </LinearLayout>
 
@@ -110,8 +132,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/share_btn_txt"
-        android:drawableStart="@drawable/ic_share_black_24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:drawablePadding="4dp"
-        />
-</LinearLayout>
+        android:drawableStart="@drawable/ic_share_black_24dp"
+        android:text="@string/share_btn_txt"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ext_row" />
+
+</android.support.constraint.ConstraintLayout>

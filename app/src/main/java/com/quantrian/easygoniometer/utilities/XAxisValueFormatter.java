@@ -14,14 +14,14 @@ import java.util.Locale;
  * Created by Yasir on 02/06/16.
  * Modified by Vinnie on 02/23/18.
  */
-public class HourAxisValueFormatter implements IAxisValueFormatter
+public class XAxisValueFormatter implements IAxisValueFormatter
 {
 
     private long referenceTimestamp; // minimum timestamp in your data set
     private DateFormat mDataFormat;
     private Date mDate;
 
-    public HourAxisValueFormatter(long referenceTimestamp) {
+    public XAxisValueFormatter(long referenceTimestamp) {
         this.referenceTimestamp = referenceTimestamp;
         this.mDataFormat = new SimpleDateFormat("MMM dd", Locale.ENGLISH);
         this.mDate = new Date();
@@ -44,7 +44,7 @@ public class HourAxisValueFormatter implements IAxisValueFormatter
 
         // Retrieve original timestamp
         long originalTimestamp = referenceTimestamp + convertedTimestamp;
-        Log.d("CONVERT_BACK", "getFormattedValue: "+referenceTimestamp +" + "+ convertedTimestamp +" = "+originalTimestamp);
+        //Log.d("CONVERT_BACK", "getFormattedValue: "+referenceTimestamp +" + "+ convertedTimestamp +" = "+originalTimestamp);
 
         // Convert timestamp to hour:minute
         return getHour(originalTimestamp);
@@ -53,8 +53,8 @@ public class HourAxisValueFormatter implements IAxisValueFormatter
     private String getHour(long timestamp){
         try{
             mDate.setTime(timestamp*1000);
-            Log.d("NUM_DATE", "getHour: "+ timestamp*1000);
-            Log.d("REALDATE", "getHour: "+ mDataFormat.format(mDate));
+            //Log.d("NUM_DATE", "getHour: "+ timestamp*1000);
+            //Log.d("REALDATE", "getHour: "+ mDataFormat.format(mDate));
             return mDataFormat.format(mDate);
         }
         catch(Exception ex){

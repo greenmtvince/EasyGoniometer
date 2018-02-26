@@ -7,9 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.quantrian.easygoniometer.R;
+import com.quantrian.easygoniometer.models.Reading;
+import com.quantrian.easygoniometer.utilities.DateConverter;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +31,8 @@ public class DetailsFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private TextView heading;
+    private TextView subTitle;
     private View mBaseView;
 
     // TODO: Rename and change types of parameters
@@ -70,51 +78,45 @@ public class DetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         mBaseView = inflater.inflate(R.layout.fragment_details, container, false);
 
+        Bundle bundle = this.getArguments();
+        int rom = bundle.getInt("ROM");
+
+        heading = mBaseView.findViewById(R.id.detail_heading);
+        subTitle = mBaseView.findViewById(R.id.detail_subtitle);
+
+        heading.setText(String.format(getString(R.string.rom_heading),rom));
+
 
         return mBaseView;
     }
 
-    public void updateHeading(String msg){
-        TextView heading = mBaseView.findViewById(R.id.detail_heading);
-        heading.setText(msg);
-    }
+    public void updateHeading(Reading reading){
+        //Get my Views
+        LinearLayout flex_row = mBaseView.findViewById(R.id.flex_row);
+        LinearLayout ext_row = mBaseView.findViewById(R.id.ext_row);
+        Button share_btn = mBaseView.findViewById(R.id.share_btn);
+        TextView flex_value = mBaseView.findViewById(R.id.flex_value);
+        TextView ext_value = mBaseView.findViewById(R.id.ext_value);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        /*if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }*/
+        //Adjust Visibilities of Views
+        subTitle.setVisibility(View.GONE);
+        ext_row.setVisibility(View.VISIBLE);
+        flex_row.setVisibility(View.VISIBLE);
+        share_btn.setVisibility(View.VISIBLE);
+
+        //Display Values
+        heading.setText(DateConverter.secToString(reading.date));
+        flex_value.setText(String.format(getString(R.string.flexion_value),reading.flexion));
+        ext_value.setText(String.format(getString(R.string.extension_value),reading.extension));
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-       /* if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        //mListener = null;
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    /*public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }*/
 }

@@ -23,7 +23,11 @@ public class ReadingDbHelper extends SQLiteOpenHelper{
                 ReadingContract.ReadingEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 ReadingContract.ReadingEntry.COLUMN_EXTENSION + " INTEGER NOT NULL, " +
                 ReadingContract.ReadingEntry.COLUMN_FLEXION + " INTEGER NOT NULL, " +
-                ReadingContract.ReadingEntry.COLUMN_DATE + " INTEGER NOT NULL " +
+                ReadingContract.ReadingEntry.COLUMN_DATE + " INTEGER NOT NULL, " +
+                ReadingContract.ReadingEntry.COLUMN_FLEX_MAX + " INTEGER, " +
+                ReadingContract.ReadingEntry.COLUMN_FLEX_MIN + " INTEGER, " +
+                ReadingContract.ReadingEntry.COLUMN_EXT_MAX + " INTEGER, " +
+                ReadingContract.ReadingEntry.COLUMN_EXT_MIN + " INTEGER " +
                 "); ";
         sqLiteDatabase.execSQL(SQL_CREATE_READING_TABLE);
     }

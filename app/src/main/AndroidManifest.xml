@@ -32,6 +32,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="com.quantrian.easygoniometer"
+            android:name=".data.ReadingContentProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>

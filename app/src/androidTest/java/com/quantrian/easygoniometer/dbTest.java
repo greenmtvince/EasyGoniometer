@@ -130,7 +130,7 @@ public class dbTest {
         /* Use WaitlistDbHelper to get access to a writable database */
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        ContentValues testValues = recipeValues(1);
+        ContentValues testValues = readingValues(1);
 
         /* Insert ContentValues into database and get first row ID back */
         long firstRowId = database.insert(
@@ -190,7 +190,7 @@ public class dbTest {
         /* Use WaitlistDbHelper to get access to a writable database */
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        ContentValues testValues = recipeValues(1);
+        ContentValues testValues = readingValues(1);
 
         /* Insert ContentValues into database and get first row ID back */
         long firstRowId = database.insert(
@@ -227,7 +227,7 @@ public class dbTest {
         /* Use WaitlistDbHelper to get access to a writable database */
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        ContentValues testValues = recipeValues(1);
+        ContentValues testValues = readingValues(1);
 
 
         /* Insert ContentValues into database and get first row ID back */
@@ -285,7 +285,7 @@ public class dbTest {
     /**
      * Deletes the entire database.
      */
-    void deleteTheDatabase(){
+    private void deleteTheDatabase(){
         try {
             /* Use reflection to get the database name from the db helper class */
             Field f = mDbHelperClass.getDeclaredField("DATABASE_NAME");
@@ -299,7 +299,7 @@ public class dbTest {
 
     }
 
-    public ContentValues recipeValues(int i){
+    public ContentValues readingValues(int i){
         ContentValues testValues = new ContentValues();
         testValues.put(ReadingContract.ReadingEntry.COLUMN_FLEXION, 110);
         testValues.put(ReadingContract.ReadingEntry.COLUMN_EXTENSION, 5);

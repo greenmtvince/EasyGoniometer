@@ -13,6 +13,10 @@ public class Reading implements Parcelable {
     public int flexion;
     public int extension;
     public long date;
+    public int flex_min;
+    public int flex_max;
+    public int ext_min;
+    public int ext_max;
 
     public Reading(int flexion, int extension, long date){
         this.flexion = flexion;
@@ -46,7 +50,6 @@ public class Reading implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        //parcel.writeString(id);
         parcel.writeInt(flexion);
         parcel.writeInt(extension);
         parcel.writeLong(date);

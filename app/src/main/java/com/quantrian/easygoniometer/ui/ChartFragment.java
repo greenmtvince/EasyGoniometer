@@ -2,14 +2,12 @@ package com.quantrian.easygoniometer.ui;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -22,13 +20,11 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.quantrian.easygoniometer.R;
 import com.quantrian.easygoniometer.models.Reading;
-import com.quantrian.easygoniometer.utilities.HourAxisValueFormatter;
+import com.quantrian.easygoniometer.utilities.XAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 
 /**
@@ -45,6 +41,7 @@ public class ChartFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String DATA = "DATA";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -53,6 +50,9 @@ public class ChartFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private ArrayList<Reading> mReadings;
+    private ArrayList<Reading> mAdjustedReadings;
 
     public ChartFragment() {
         // Required empty public constructor
@@ -91,19 +91,25 @@ public class ChartFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_chart, container, false);
         LineChart chart = rootView.findViewById(R.id.chart);
 
-        Reading[] dataObjects = buildTestData(5);
+        Bundle bundle = this.getArguments();
+
+        if (bundle!= null){
+            mReadings = bundle.getParcelableArrayList(DATA);
+        }
+
+        mAdjustedReadings = new ArrayList<>();
+        //Convert dates to a zero reference for performance described in the MPAndroid documentation
+        zeroReferenceDates();
 
         List<Entry> entriesExt = new ArrayList<Entry>();
         List<Entry> entriesFlex = new ArrayList<Entry>();
 
-        for (Reading data : dataObjects){
+        for (Reading data : mAdjustedReadings){
             entriesExt.add(new Entry(data.date,data.extension));
             entriesFlex.add(new Entry(data.date,data.flexion));
         }
 
         ArrayList<ILineDataSet> lines = new ArrayList<ILineDataSet>();
-
-        //String[] xAxis = new String[]{"1","2","3","4","5","6"};
 
         LineDataSet dataSet1 = new LineDataSet(entriesExt, getActivity().getString(R.string.extension_label));
         dataSet1.setColor(Color.CYAN);
@@ -115,11 +121,10 @@ public class ChartFragment extends Fragment {
         dataSet2.setValueTextColor(Color.BLACK);
         lines.add(dataSet2);
 
-        IAxisValueFormatter xAxisValueFormatter = new HourAxisValueFormatter(referenceTimestamp);
+        IAxisValueFormatter xAxisValueFormatter = new XAxisValueFormatter(referenceTimestamp);
 
         XAxis xAxis1 = chart.getXAxis();
         xAxis1.setValueFormatter(xAxisValueFormatter);
-
 
         chart.setData(new LineData(lines));
         chart.setScaleYEnabled(false);
@@ -128,28 +133,24 @@ public class ChartFragment extends Fragment {
         chart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                mListener.onFragmentInteraction(Float.toString(e.getX()));
-                //Toast.makeText(getContext(), "Value: " +e.getY()+ " at " + e.getX(), Toast.LENGTH_SHORT).show();
+
+                //These intermediate values are explicitly calculated int his order because the
+                //longValue() method has some weird rounding results.
+                Float f = e.getX();
+                Long l = f.longValue();
+                Long output = l+referenceTimestamp;
+
+                Log.d("OUTTIE", "onValueSelected: "+ f + " as long: "+l+" + " + referenceTimestamp + " The Value is " + output);
+                mListener.onFragmentInteraction(output);
             }
 
             @Override
             public void onNothingSelected() {
-
             }
         });
-
-
         // Inflate the layout for this fragment
         return rootView;
-
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    /*public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }*/
 
     @Override
     public void onAttach(Context context) {
@@ -165,7 +166,7 @@ public class ChartFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-       // mListener = null;
+        mListener = null;
     }
 
     /**
@@ -179,64 +180,21 @@ public class ChartFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(String message);
+        void onFragmentInteraction(Long point);
     }
 
-    private Reading[] buildTestData(int max){
-        final Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -5);
 
-        Reading[] outArray = new Reading[5];
-        outArray[0] =new Reading(85,10,dummyDate(cal,0));
-        outArray[1] =new Reading(90,8,dummyDate(cal,1));
-        outArray[2] =new Reading(92,7,dummyDate(cal,1));
-        outArray[3] =new Reading(90,4,dummyDate(cal,1));
-        outArray[4] =new Reading(98,3,dummyDate(cal,1));
+    private void zeroReferenceDates(){
+        referenceTimestamp = mReadings.get(0).date;
 
-        Log.d("WTFROFLBBQ", "buildTestData: size = " +outArray.length);
+        for (Reading r : mReadings){
 
-        referenceTimestamp =  outArray[0].date;
-
-        outArray = zeroReferenceDates(outArray,referenceTimestamp);
-        //referenceTimestamp = referenceTimestamp/1000;
-
-        return outArray;
-    }
-
-    private long dummyDate(Calendar cal, int addor){
-
-        cal.add(Calendar.DATE, +addor);
-        Log.d("TIMEOUT", "dummyDate: "+ cal.getTime());
-        long timeOut = cal.getTime().getTime()/1000;
-        Log.d("TIMEOUT", "dummyDate: "+timeOut);
-        return timeOut;
-    }
-
-    public class DummyData{
-        private final long X;
-        private final int Y;
-
-        public DummyData(long Xer, int Yer){
-            X = Xer;
-            Y = Yer;
+            Reading tempReading = new Reading(r.flexion,r.extension,r.date);
+            tempReading.date = tempReading.date-referenceTimestamp;
+            //long combined = tempReading.date+referenceTimestamp;
+            //Log.d("CONTENTVAL", "zeroReferenceDates: "+r.date +" vs " +combined);
+            mAdjustedReadings.add(tempReading);
+            //r.date = r.date-referenceTimestamp;
         }
-
-        public long getX(){return X;}
-
-        public int getY() {
-            return Y;
-        }
-    }
-
-    private Reading[] zeroReferenceDates(Reading[]oldSet, long reference){
-        Reading[] convertedDates = new Reading[oldSet.length];
-
-
-        for (int i=0;i<oldSet.length;i++){
-            convertedDates[i]= new Reading(oldSet[i].flexion, oldSet[i].extension,(oldSet[i].date-reference));
-            Log.d("TIME_CONTROL", "zeroReferenceDates: "+ oldSet[i].date+" - "+ reference +" = "+ convertedDates[i].date);
-        }
-        return convertedDates;
     }
 }
