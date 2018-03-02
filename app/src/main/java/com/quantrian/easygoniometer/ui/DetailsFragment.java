@@ -1,6 +1,7 @@
 package com.quantrian.easygoniometer.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,9 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.share.Share;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.quantrian.easygoniometer.R;
 import com.quantrian.easygoniometer.models.Reading;
 import com.quantrian.easygoniometer.utilities.DateConverter;
@@ -34,6 +41,11 @@ public class DetailsFragment extends Fragment {
     private TextView heading;
     private TextView subTitle;
     private View mBaseView;
+    private Reading mReading;
+
+    //Facebook fields
+    CallbackManager callbackManager;
+    ShareDialog shareDialog;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -78,23 +90,64 @@ public class DetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         mBaseView = inflater.inflate(R.layout.fragment_details, container, false);
 
-        Bundle bundle = this.getArguments();
-        int rom = bundle.getInt("ROM");
-
         heading = mBaseView.findViewById(R.id.detail_heading);
         subTitle = mBaseView.findViewById(R.id.detail_subtitle);
 
-        heading.setText(String.format(getString(R.string.rom_heading),rom));
+        Bundle bundle = this.getArguments();
+        Reading r = bundle.getParcelable("READING");
+        if (r!=null){
+            updateHeading(r);
+        } else {
+            int rom = bundle.getInt("ROM");
+            heading.setText(String.format(getString(R.string.rom_heading),rom));
+        }
 
+
+
+
+
+
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
 
         return mBaseView;
     }
 
     public void updateHeading(Reading reading){
+        mReading=reading;
+
         //Get my Views
         LinearLayout flex_row = mBaseView.findViewById(R.id.flex_row);
         LinearLayout ext_row = mBaseView.findViewById(R.id.ext_row);
-        Button share_btn = mBaseView.findViewById(R.id.share_btn);
+        LinearLayout share_row = mBaseView.findViewById(R.id.share_row);
+
+        ImageView fb_iv = mBaseView.findViewById(R.id.facebookImg);
+        ImageView sms_iv = mBaseView.findViewById(R.id.smsImg);
+        ImageView mail_iv = mBaseView.findViewById(R.id.mailImg);
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()){
+                    case R.id.facebookImg:
+                        shareContent();
+                        break;
+                    case R.id.smsImg:
+                        shareSMS();
+                        break;
+                    case R.id.mailImg:
+                        shareEmail();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        fb_iv.setOnClickListener(listener);
+        sms_iv.setOnClickListener(listener);
+        mail_iv.setOnClickListener(listener);
+
         TextView flex_value = mBaseView.findViewById(R.id.flex_value);
         TextView ext_value = mBaseView.findViewById(R.id.ext_value);
 
@@ -102,7 +155,7 @@ public class DetailsFragment extends Fragment {
         subTitle.setVisibility(View.GONE);
         ext_row.setVisibility(View.VISIBLE);
         flex_row.setVisibility(View.VISIBLE);
-        share_btn.setVisibility(View.VISIBLE);
+        share_row.setVisibility(View.VISIBLE);
 
         //Display Values
         heading.setText(DateConverter.secToString(reading.date));
@@ -118,5 +171,30 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    public void shareContent(){
+        if (ShareDialog.canShow(ShareLinkContent.class)){
+            ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                    .setContentUrl(Uri.parse("https://developers.facebook.com"))
+                    .setQuote(String.format("Flexion: %d  Extension %d  on %s",mReading.flexion,mReading.extension,DateConverter.secToString(mReading.date)))
+                    .build();
+            shareDialog.show(linkContent);
+        }
+    }
+
+    public void shareSMS(){
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.setData(Uri.parse("sms:"));
+        sendIntent.putExtra("sms_body",String.format("Flexion: %d  Extension %d  on %s",mReading.flexion,mReading.extension,DateConverter.secToString(mReading.date)));
+        startActivity(sendIntent);
+    }
+
+    public void shareEmail(){
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.setData(Uri.parse("mailto:"));
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "My knee range of motion on " + DateConverter.secToString(mReading.date));
+        sendIntent.putExtra(Intent.EXTRA_TEXT,String.format("Flexion: %d  Extension %d  on %s",mReading.flexion,mReading.extension,DateConverter.secToString(mReading.date)));
+        startActivity(sendIntent);
     }
 }

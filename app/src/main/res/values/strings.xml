@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Easy Goniometer</string>
+    <string name="facebook_app_id">1336711883133117</string>
 
     <!--Instructions for the Goniometer Steps-->
     <string name="goniometer_intro">Lie flat on your back. If possible, put a towel under the ankle
@@ -35,5 +36,71 @@
     <string name="flex_icon_description">Person flexing leg</string>
     <string name="ext_icon_description">Person extending leg</string>
 
-    <string name="share_btn_txt">Share</string>
+    <!-- settings Values -->
+    <string name="pref_gender_male_lbl">Male</string>
+    <string name="pref_gender_female_lbl">Female</string>
+    <string name="pref_gender_male_value" translatable="false">male</string>
+    <string name="pref_gender_female_value" translatable="false">female</string>
+
+    <string name="pref_knee_left_lbl">Left</string>
+    <string name="pref_knee_right_lbl">Right</string>
+    <string name="pref_knee_left_value" translatable="false">left</string>
+    <string name="pref_knee_right_value" translatable="false">right</string>
+
+    <string name="pref_height_54_lbl">4\'6" or shorter</string>
+    <string name="pref_height_55_lbl">4\'7"</string>
+    <string name="pref_height_56_lbl">4\'8"</string>
+    <string name="pref_height_57_lbl">4\'9"</string>
+    <string name="pref_height_58_lbl">4\'10"</string>
+    <string name="pref_height_59_lbl">4\'11"</string>
+    <string name="pref_height_60_lbl">5\'0"</string>
+    <string name="pref_height_61_lbl">5\'1"</string>
+    <string name="pref_height_62_lbl">5\'2"</string>
+    <string name="pref_height_63_lbl">5\'3"</string>
+    <string name="pref_height_64_lbl">5\'4"</string>
+    <string name="pref_height_65_lbl">5\'5"</string>
+    <string name="pref_height_66_lbl">5\'6"</string>
+    <string name="pref_height_67_lbl">5\'7"</string>
+    <string name="pref_height_68_lbl">5\'8"</string>
+    <string name="pref_height_69_lbl">5\'9"</string>
+    <string name="pref_height_70_lbl">5\'10"</string>
+    <string name="pref_height_71_lbl">5\'11"</string>
+    <string name="pref_height_72_lbl">6\'0"</string>
+    <string name="pref_height_73_lbl">6\'1"</string>
+    <string name="pref_height_74_lbl">6\'2"</string>
+    <string name="pref_height_75_lbl">6\'3"</string>
+    <string name="pref_height_76_lbl">6\'4"</string>
+    <string name="pref_height_77_lbl">6\'5"</string>
+    <string name="pref_height_78_lbl">6\'6" or taller</string>
+
+    <string name="pref_height_54_value">54</string>
+    <string name="pref_height_55_value">55</string>
+    <string name="pref_height_56_value">56</string>
+    <string name="pref_height_57_value">57</string>
+    <string name="pref_height_58_value">58</string>
+    <string name="pref_height_59_value">59</string>
+    <string name="pref_height_60_value">60</string>
+    <string name="pref_height_61_value">61</string>
+    <string name="pref_height_62_value">62</string>
+    <string name="pref_height_63_value">63</string>
+    <string name="pref_height_64_value">64</string>
+    <string name="pref_height_65_value">65</string>
+    <string name="pref_height_66_value">66</string>
+    <string name="pref_height_67_value">67</string>
+    <string name="pref_height_68_value">68</string>
+    <string name="pref_height_69_value">69</string>
+    <string name="pref_height_70_value">70</string>
+    <string name="pref_height_71_value">71</string>
+    <string name="pref_height_72_value">72</string>
+    <string name="pref_height_73_value">73</string>
+    <string name="pref_height_74_value">74</string>
+    <string name="pref_height_75_value">75</string>
+    <string name="pref_height_76_value">76</string>
+    <string name="pref_height_77_value">77</string>
+    <string name="pref_height_78_value">78</string>
+
+
+
+
+
 </resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pref_gender_labels">
+        <item>@string/pref_gender_female_lbl</item>
+        <item>@string/pref_gender_male_lbl</item>
+    </array>
+    <array name="pref_gender_values">
+        <item>@string/pref_gender_female_value</item>
+        <item>@string/pref_gender_male_value</item>
+    </array>
+    <array name="pref_height_labels">
+        <item>@string/pref_height_54_lbl</item>
+        <item>@string/pref_height_55_lbl</item>
+        <item>@string/pref_height_56_lbl</item>
+        <item>@string/pref_height_57_lbl</item>
+        <item>@string/pref_height_58_lbl</item>
+        <item>@string/pref_height_59_lbl</item>
+        <item>@string/pref_height_60_lbl</item>
+        <item>@string/pref_height_61_lbl</item>
+        <item>@string/pref_height_62_lbl</item>
+        <item>@string/pref_height_63_lbl</item>
+        <item>@string/pref_height_64_lbl</item>
+        <item>@string/pref_height_65_lbl</item>
+        <item>@string/pref_height_66_lbl</item>
+        <item>@string/pref_height_67_lbl</item>
+        <item>@string/pref_height_68_lbl</item>
+        <item>@string/pref_height_69_lbl</item>
+        <item>@string/pref_height_70_lbl</item>
+        <item>@string/pref_height_71_lbl</item>
+        <item>@string/pref_height_72_lbl</item>
+        <item>@string/pref_height_73_lbl</item>
+        <item>@string/pref_height_74_lbl</item>
+        <item>@string/pref_height_75_lbl</item>
+        <item>@string/pref_height_76_lbl</item>
+        <item>@string/pref_height_77_lbl</item>
+        <item>@string/pref_height_78_lbl</item>
+    </array>
+    <array name="pref_height_values">
+        <item>@string/pref_height_54_value</item>
+        <item>@string/pref_height_55_value</item>
+        <item>@string/pref_height_56_value</item>
+        <item>@string/pref_height_57_value</item>
+        <item>@string/pref_height_58_value</item>
+        <item>@string/pref_height_59_value</item>
+        <item>@string/pref_height_60_value</item>
+        <item>@string/pref_height_61_value</item>
+        <item>@string/pref_height_62_value</item>
+        <item>@string/pref_height_63_value</item>
+        <item>@string/pref_height_64_value</item>
+        <item>@string/pref_height_65_value</item>
+        <item>@string/pref_height_66_value</item>
+        <item>@string/pref_height_67_value</item>
+        <item>@string/pref_height_68_value</item>
+        <item>@string/pref_height_69_value</item>
+        <item>@string/pref_height_70_value</item>
+        <item>@string/pref_height_71_value</item>
+        <item>@string/pref_height_72_value</item>
+        <item>@string/pref_height_73_value</item>
+        <item>@string/pref_height_74_value</item>
+        <item>@string/pref_height_75_value</item>
+        <item>@string/pref_height_76_value</item>
+        <item>@string/pref_height_77_value</item>
+        <item>@string/pref_height_78_value</item>
+    </array>
+    <array name="pref_knee_labels">
+        <item>@string/pref_knee_left_lbl</item>
+        <item>@string/pref_knee_right_lbl</item>
+    </array>
+    <array name="pref_knee_values">
+        <item>@string/pref_knee_left_value</item>
+        <item>@string/pref_knee_right_value</item>
+    </array>
+</resources>

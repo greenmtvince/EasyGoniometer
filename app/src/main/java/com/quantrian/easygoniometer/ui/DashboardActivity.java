@@ -6,10 +6,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.quantrian.easygoniometer.R;
+import com.quantrian.easygoniometer.data.SettingsActivity;
 import com.quantrian.easygoniometer.models.Reading;
 import com.quantrian.easygoniometer.utilities.DummyData;
 import com.quantrian.easygoniometer.utilities.FetchReadings;
@@ -40,7 +44,7 @@ public class DashboardActivity extends AppCompatActivity implements ChartFragmen
         });
 
         //initialize test data
-        DummyData dummyData=new DummyData(this);
+        //DummyData dummyData=new DummyData(this);
         //Toast.makeText(this, "DB Size is : "+ dummyData.getTableSize(),Toast.LENGTH_SHORT).show();
 
 
@@ -78,6 +82,7 @@ public class DashboardActivity extends AppCompatActivity implements ChartFragmen
         DetailsFragment detailsFragment = (DetailsFragment) getSupportFragmentManager().findFragmentByTag(DETAIL_FRAGMENT_TAG);
 
         if (detailsFragment!=null){
+            Log.d("NOTNULLFRAG", "loadDetails: It's NOT Null, nothing to see here folks Extension is: " +reading.extension );
             detailsFragment.updateHeading(reading);
         }
     }
@@ -113,6 +118,8 @@ public class DashboardActivity extends AppCompatActivity implements ChartFragmen
             //I don't want the fragments to load until the data is in memory
             loadChartFragment();
             initializeDetailsFragment();
+
+
         }
     }
 
@@ -120,18 +127,33 @@ public class DashboardActivity extends AppCompatActivity implements ChartFragmen
         /*
         Load the Details Fragment
          */
-        int rom = -999;
-        try{
-            Reading lastElement = mReadings.get(mReadings.size()-1);
-            rom = lastElement.flexion - lastElement.extension;
-        }
-        catch (IndexOutOfBoundsException ex){
-            Log.d("Get Elements", "onCreate: " + ex);
-        }
-
 
         Bundle bundle = new Bundle();
-        bundle.putInt("ROM",rom);
+        Intent intent = getIntent();
+        Long date = intent.getLongExtra("DATE",-999);
+
+        if(date !=-999){
+            //Bundle bundle=  getIntent().getExtras();
+
+
+            Log.d("HERE!", "onTaskComplete: " +date);
+            Reading reading = findReading(date);
+            bundle.putParcelable("READING",reading);
+        } else {
+
+            int rom = -999;
+            try {
+                Reading lastElement = mReadings.get(mReadings.size() - 1);
+                rom = lastElement.flexion - lastElement.extension;
+            } catch (IndexOutOfBoundsException ex) {
+                Log.d("Get Elements", "onCreate: " + ex);
+            }
+            bundle.putInt("ROM",rom);
+        }
+
+
+
+
 
         DetailsFragment frag2 = new DetailsFragment();
         frag2.setArguments(bundle);
@@ -152,12 +174,33 @@ public class DashboardActivity extends AppCompatActivity implements ChartFragmen
         //reason to implement something faster yet.
 
         for (Reading r : mReadings){
-            //Log.d("COMPARE", "findReading: timeindex: " + timeIndex + " reading: " + r.date);
+            Log.d("COMPARE", "findReading: timeindex: " + timeIndex + " reading: " + r.date);
             if (r.date==timeIndex){
+                Log.d("MATCH", "findReading: MATCH!!!");
 
                 return r;
             }
         }
         return null;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.dashboard_activity_menu, menu);
+        return true;
+    }
+
+    //Launch the settings activity!
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
+            startActivity(startSettingsActivity);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

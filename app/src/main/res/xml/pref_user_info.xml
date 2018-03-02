@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <EditTextPreference
+        android:key="edit_text_preference_1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Age: "
+        android:inputType="number"
+        android:digits="1234567890"
+        android:defaultValue="50"
+        android:summary=""
+        />
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/pref_gender_labels"
+        android:entryValues="@array/pref_gender_values"
+        android:key="list_preference_1"
+        android:title="Gender: " />
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/pref_height_labels"
+        android:entryValues="@array/pref_height_values"
+        android:key="list_preference_2"
+        android:title="Height"
+        />
+    <EditTextPreference
+        android:key="weight"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Weight: "
+        android:inputType="number"
+        android:digits="1234567890"
+        android:defaultValue="150"
+        android:summary=""
+        />
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/pref_knee_labels"
+        android:entryValues="@array/pref_knee_values"
+        android:key="list_preference_3"
+        android:title="Knee" />
+    <DatePickerPreference
+        android:key="surgery_date"
+        android:persistent="false"
+        android:summary="Select a date"
+        android:title="Surgery Date"
+        app:pref_minDate="08/31/2017"
+        app:pref_summaryHasDate="Selected date: %s" />
+</PreferenceScreen>

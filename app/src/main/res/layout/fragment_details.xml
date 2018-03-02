@@ -41,7 +41,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_heading">
@@ -88,7 +88,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flex_row">
@@ -127,20 +127,45 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/share_btn"
+    <LinearLayout
+        android:id="@+id/share_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:drawablePadding="4dp"
-        android:drawableStart="@drawable/ic_share_black_24dp"
-        android:text="@string/share_btn_txt"
-        android:visibility="gone"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ext_row" />
+        app:layout_constraintTop_toBottomOf="@+id/ext_row">
+
+
+        <ImageView
+            android:id="@+id/facebookImg"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/com_facebook_button_icon_blue" />
+
+        <ImageView
+            android:id="@+id/smsImg"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:cropToPadding="false"
+            app:srcCompat="@drawable/ic_message_white_24dp" />
+
+        <ImageView
+            android:id="@+id/mailImg"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/com_facebook_button_background"
+            app:srcCompat="@drawable/ic_email_white_24dp" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

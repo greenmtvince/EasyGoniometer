@@ -8,6 +8,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -180,31 +181,26 @@ public class GoniometerActivity extends AppCompatActivity implements SensorEvent
 
     }
 
-    private long addNewReading(){
+    private void addNewReading(){
         Date date = Calendar.getInstance().getTime();
-        //SimpleDateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        //dateString = iso8601Format.format(date);
-
         dateSec=date.getTime()/1000;
 
         ContentValues cv = new ContentValues();
-
         cv.put(ReadingContract.ReadingEntry.COLUMN_FLEXION,flexion);
         cv.put(ReadingContract.ReadingEntry.COLUMN_EXTENSION,extension);
         cv.put(ReadingContract.ReadingEntry.COLUMN_DATE,dateSec);
 
-        ReadingDbHelper dbHelper = new ReadingDbHelper(this);
+        Uri uri = getContentResolver().insert(ReadingContract.ReadingEntry.CONTENT_URI, cv);
 
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
+        if(uri !=null){
+            Log.d("TESTING", "addNewReading: "+uri.toString());
+        } else
+            Log.d("TESTING", "Didn't work!");
 
-        return database.insert(ReadingContract.ReadingEntry.TABLE_NAME, null,cv);
     }
 
     private void returnToDashboard(){
         Intent intent = new Intent(this, DashboardActivity.class);
-        intent.putExtra("EXTENSION",extension);
-        intent.putExtra("FLEXION",flexion);
         intent.putExtra("DATE",dateSec);
         //I don't want two (or more) dashboard activities in the stack
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

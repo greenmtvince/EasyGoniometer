@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.quantrian.easygoniometer">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature
         android:name="android.hardware.sensor.accelerometer"
         android:required="true" />
@@ -16,14 +18,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
         <activity
             android:name=".ui.GoniometerActivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.DashboardActivity"/>
-
+                android:value=".ui.DashboardActivity" />
         </activity>
         <activity android:name=".ui.DashboardActivity">
             <intent-filter>
@@ -32,10 +37,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
-            android:authorities="com.quantrian.easygoniometer"
             android:name=".data.ReadingContentProvider"
-            android:exported="false"/>
+            android:authorities="com.quantrian.easygoniometer"
+            android:exported="false" />
+
+        <activity
+            android:name=".data.SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName=".ui.DashboardActivity"
+            >
+            <meta-data
+                android:value=".ui.DashboardActivity"
+                android:name="android.support.PARENT_ACTIVITY"/>
+        </activity>
     </application>
 
 </manifest>
